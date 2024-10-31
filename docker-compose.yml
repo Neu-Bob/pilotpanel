@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:17
     environment:
       POSTGRES_USER: pilotpanel
       POSTGRES_PASSWORD: superstrongpassword
