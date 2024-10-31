@@ -39,15 +39,15 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-  user_portal:
-    build:
-      context: ./user_portal
-    ports:
-      - "3000:3000"  # Expose the appropriate port for the user portal
-    networks:
-      - pilotnet
-    volumes:
-      - user_portal_data:/app
+  # user_portal:
+  #   build:
+  #     context: ./user_portal
+  #   ports:
+  #     - "3000:3000"  # Expose the appropriate port for the user portal
+  #   networks:
+  #     - pilotnet
+  #   volumes:
+  #     - user_portal_data:/app
 
 networks:
   pilotnet:
