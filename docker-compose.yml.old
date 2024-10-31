@@ -39,16 +39,6 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-  user_portal:
-    build:
-      context: ./user_portal
-    ports:
-      - "3000:3000"  # Exposing port 3000 for the web app
-    networks:
-      - pilotnet
-    volumes:
-      - user_portal_data:/app  # Volume for application files
-
 networks:
   pilotnet:
 
@@ -56,4 +46,5 @@ volumes:
   postgres_data:
   nodered_data:
   pgadmin_data:
-  user_portal_data:  # New volume for user portal files
+
+  
