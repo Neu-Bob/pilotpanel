@@ -1,30 +1,27 @@
-version: '3.8'
 services:
   postgres:
-    image: postgres:16
+    image: postgres:latest
     environment:
       POSTGRES_USER: pilotpanel
       POSTGRES_PASSWORD: superstrongpassword
       POSTGRES_DB: pilotpanel
+      TZ: "America/New_York"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - backend
+      - pilotnet
+
   node-red:
-    image: nodered/node-red:latest
+    image: nodered/node-red
     environment:
-      - TZ=America/New_York
-      - PGUSER=pilotpanel
-      - PGPASSWORD=superstrongpassword
-      - PGDATABASE=pilotpanel
+      TZ: "America/New_York"
     ports:
       - "1880:1880"
     networks:
-      - backend
+      - pilotnet
     volumes:
-      - node_red_data:/data
-    depends_on:
-      - postgres
+      - nodered_data:/data
+
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -38,7 +35,8 @@ services:
       - postgres
 
 networks:
-  backend:
+  pilotnet:
+
 volumes:
   postgres_data:
-  node_red_data:
+  nodered_data:
