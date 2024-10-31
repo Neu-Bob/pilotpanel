@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: postgres
@@ -14,8 +16,7 @@ services:
 
   webapp:
     build:
-      context: ./user_portal  # Path to your application code
-      dockerfile: Dockerfile
+      context: https://github.com/Neu-Bob/pilotpanel.git
     container_name: webapp
     environment:
       NODE_ENV: production
