@@ -43,7 +43,7 @@ services:
 
   webapp:
     build:
-      context: ./user_portal  # Path to your user_portal directory
+      context: https://github.com/Neu-Bob/pilotpanel  # Path to your user_portal directory
       dockerfile: Dockerfile
     container_name: webapp
     environment:
