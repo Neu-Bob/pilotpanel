@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: postgres
@@ -9,6 +11,7 @@ services:
       TZ: "America/New_York"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./user_portal/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - pilotnet
 
@@ -39,15 +42,27 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-  user_portal:
+  webapp:
     build:
-      context: ./user_portal
+      context: ./user_portal  # Path to your user_portal directory
+      dockerfile: Dockerfile
+    container_name: webapp
+    environment:
+      NODE_ENV: production
+      DATABASE_HOST: postgres
+      DATABASE_USER: pilotpanel
+      DATABASE_PASSWORD: superstrongpassword
+      DATABASE_NAME: pilotpanel
+      DATABASE_PORT: 5432
+      TZ: "America/New_York"
     ports:
-      - "3000:3000"  # Exposing port 3000 for the web app
+      - "3000:3000"  # Map the app port to host
+    depends_on:
+      - postgres
     networks:
       - pilotnet
     volumes:
-      - user_portal_data:/app  # Volume for application files
+      - webapp_data:/usr/src/app
 
 networks:
   pilotnet:
@@ -56,4 +71,4 @@ volumes:
   postgres_data:
   nodered_data:
   pgadmin_data:
-  user_portal_data:  # New volume for user portal files
+  webapp_data:
