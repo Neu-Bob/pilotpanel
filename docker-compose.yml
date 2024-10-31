@@ -57,3 +57,5 @@ volumes:
   nodered_data:
   pgadmin_data:
   user_portal_data:  # New volume for user portal files
+
+  
