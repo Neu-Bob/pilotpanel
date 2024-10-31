@@ -1,5 +1,6 @@
 services:
   postgres:
+    container_name: postgres
     image: postgres:latest
     environment:
       POSTGRES_USER: pilotpanel
@@ -12,6 +13,7 @@ services:
       - pilotnet
 
   node-red:
+    container_name: ppnodered
     image: nodered/node-red:latest
     environment:
       TZ: "America/New_York"
@@ -23,7 +25,7 @@ services:
       - nodered_data:/data
 
   pgadmin:
-    container_name: pgadmin
+    container_name: pppgadmin
     image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
