@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: pilotpanel
+      POSTGRES_PASSWORD: superstrongpassword
+      POSTGRES_DB: pilotpanel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+networks:
+  backend:
+volumes:
+  postgres_data:
