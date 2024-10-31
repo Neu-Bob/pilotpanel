@@ -10,7 +10,24 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - backend
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/New_York
+      - PGUSER=pilotpanel
+      - PGPASSWORD=superstrongpassword
+      - PGDATABASE=pilotpanel
+    ports:
+      - "1880:1880"
+    networks:
+      - backend
+    volumes:
+      - node_red_data:/data
+    depends_on:
+      - postgres
+
 networks:
   backend:
 volumes:
   postgres_data:
+  node_red_data:
