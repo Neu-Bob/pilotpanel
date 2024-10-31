@@ -14,7 +14,7 @@ services:
 
   node-red:
     name: nodered
-    image: nodered/node-red
+    image: nodered/node-red:latest
     environment:
       TZ: "America/New_York"
     ports:
@@ -26,7 +26,7 @@ services:
 
   pgadmin:
     name: pgadmin
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: yourpgadminpassword
@@ -36,6 +36,8 @@ services:
       - pilotnet
     depends_on:
       - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
 
 networks:
   pilotnet:
@@ -43,3 +45,4 @@ networks:
 volumes:
   postgres_data:
   nodered_data:
+  pgadmin_data:
