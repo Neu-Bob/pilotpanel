@@ -1,3 +1,53 @@
+# services:
+#   postgres:
+#     container_name: postgres
+#     image: postgres:16
+#     environment:
+#       POSTGRES_USER: pilotpanel
+#       POSTGRES_PASSWORD: superstrongpassword
+#       POSTGRES_DB: pilotpanel
+#       TZ: "America/New_York"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#     networks:
+#       - pilotnet
+
+#   node-red:
+#     container_name: nodered
+#     image: nodered/node-red:latest
+#     environment:
+#       TZ: "America/New_York"
+#     ports:
+#       - "1880:1880"
+#     networks:
+#       - pilotnet
+#     volumes:
+#       - nodered_data:/data
+
+#   pgadmin:
+#     container_name: pgadmin
+#     image: dpage/pgadmin4:latest
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: admin@example.com
+#       PGADMIN_DEFAULT_PASSWORD: yourpgadminpassword
+#     ports:
+#       - "5050:80"
+#     networks:
+#       - pilotnet
+#     depends_on:
+#       - postgres
+#     volumes:
+#       - pgadmin_data:/var/lib/pgadmin
+
+# networks:
+#   pilotnet:
+
+# volumes:
+#   postgres_data:
+#   nodered_data:
+#   pgadmin_data:
+
+
 services:
   postgres:
     container_name: postgres
@@ -39,6 +89,22 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  user_portal:
+    container_name: user_portal
+    image: node:16  # Node.js environment for the portal
+    working_dir: /app
+    networks:
+      - pilotnet
+    volumes:
+      - user_portal_data:/app  # Volume for application files
+    ports:
+      - "3000:3000"  # Exposing port 3000 for the web app
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgres://pilotpanel:superstrongpassword@postgres:5432/pilotpanel
+    command: sh -c "npm install && npm start"
+
 networks:
   pilotnet:
 
@@ -46,3 +112,4 @@ volumes:
   postgres_data:
   nodered_data:
   pgadmin_data:
+  user_portal_data:  # New volume for user portal files  
